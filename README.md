@@ -13,12 +13,16 @@
 **VueJS**
 - Vue guides, I guess? https://vuejs.org/v2/guide/
 
+**Rails+Vue**
+- https://mkdev.me/en/posts/rails-5-vue-js-how-to-stop-worrying-and-love-the-frontend
+
+
 - - -
 ## Libraries
 
 These are just some libraries I found that might be useful. Feel free to add other resources here.
 
-**Vexflow (JS library for displaying music staff & notes):** 
+**Vexflow (JS library for displaying music staff & notes):**
 - http://www.vexflow.com/
 - https://github.com/0xfe/vexflow
 
