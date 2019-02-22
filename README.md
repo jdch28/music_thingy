@@ -22,7 +22,7 @@ These are just some libraries I found that might be useful. Feel free to add oth
 - http://www.vexflow.com/
 - https://github.com/0xfe/vexflow
 
-**Wavefile (Ruby gem to generate .wave files)**
+**Wavefile (Ruby gem to generate .wav files)**
 - http://wavefilegem.com/
 - https://github.com/jstrait/wavefile
 
