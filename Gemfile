@@ -1,5 +1,4 @@
 source 'https://rubygems.org' do
-
   gem 'rails'
 
   group :development, :test do
