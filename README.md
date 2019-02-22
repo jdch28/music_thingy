@@ -1,6 +1,19 @@
 # Music Thingy
 
 - - -
+## Frameworks
+
+**Ruby**
+- RVM: https://rvm.io/
+- Ruby Docs: https://www.ruby-lang.org/en/documentation/
+
+**Rails**
+- Rails Guides: https://guides.rubyonrails.org/getting_started.html
+
+**VueJS**
+- Vue guides, I guess? https://vuejs.org/v2/guide/
+
+- - -
 ## Libraries
 
 These are just some libraries I found that might be useful. Feel free to add other resources here.
