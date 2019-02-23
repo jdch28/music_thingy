@@ -48,3 +48,6 @@ These are just some libraries I found that might be useful. Feel free to add oth
 
 **MusicTheory.net (Some simple music theory, in case you want it. Check the 'Basics' section, explains stuff in a pretty simple way)**
 - https://www.musictheory.net/lessons
+
+**Formula for note frequency:**
+- http://pages.mtu.edu/~suits/NoteFreqCalcs.html
