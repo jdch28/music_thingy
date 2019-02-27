@@ -8,7 +8,7 @@ class SongsController < ApplicationController
   end
 
   def create
-    @song = Song.create(name: params[:name], tempo: params['tempo'].to_i, time_sign: params[:time_sign])
+    @song = Song.create(name: params[:name], tempo: params['tempo'].to_i, time_signature: params[:time_sign])
   end
 
   def show
