@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  notes: MyString
+  wave_type: MyString
+  song: one
+
+two:
+  notes: MyString
+  wave_type: MyString
+  song: two

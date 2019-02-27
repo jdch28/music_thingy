@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  tempo: 1
+  time_sign: MyString
+
+two:
+  name: MyString
+  tempo: 1
+  time_sign: MyString
