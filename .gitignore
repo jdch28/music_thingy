@@ -21,6 +21,10 @@
 /storage/*
 !/storage/.keep
 
+# Ignore test wav files
+/public/downloads/*
+!/public/downloads/.keep
+
 /node_modules
 /yarn-error.log
 
