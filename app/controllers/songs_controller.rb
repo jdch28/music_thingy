@@ -4,7 +4,7 @@ class SongsController < ApplicationController
 
   def index
     @songs = Song.all
-    render json: @songs
+    render json: @songs, include: { voices: { only: %i[id notes] } }
   end
 
   def create
@@ -12,7 +12,8 @@ class SongsController < ApplicationController
       Voice.new(
         notes: params[:voice][:notes],
         note_durations: params[:voice][:note_duration],
-        wave_type: params[:voice][:wave_type])
+        wave_type: params[:voice][:wave_type]
+      )
     ]
     @song = Song.new(
       name: params[:name],
@@ -22,19 +23,19 @@ class SongsController < ApplicationController
     )
     if @song.valid?
       @song.save
-      render json: {success: 'Song recorded', status: 200}, status: 200
+      render json: { success: 'Song recorded', song: @song, status: 200}, include: { voices: { only: %i[id notes] } }, status: 200
     else
-      render json: {error: 'Validation failed', status: 400}, status: 400
+      render json: { error: 'Validation failed', errors: @song.errors, status: 400}, status: 400
     end
   end
 
   def show
-    render json: @song, include: { voice: { only: %i[id notes] } }
+    render json: @song, include: { voices: { only: %i[id notes] } }
   end
 
   def destroy
     @song.destroy
-    head :no_content
+    render json: { success: 'Song deleted correctly', status: 200 }, status: 200
   end
 
   private
