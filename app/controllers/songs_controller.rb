@@ -38,19 +38,17 @@ class SongsController < ApplicationController
   end
 
   def update
-    if @song && @song.valid?
-      @song.name = update_params_song[:name]
-      @song.tempo = update_params_song[:tempo]
-      @song.time_signature = update_params_song[:time_signature]
-      binding.pry
-      @song.save
-      param_voices = update_params_song[:voices].index_by {|voice| voice['id']}
+    if @song&.valid?
+      @song.update(update_params_song.except('voices'))
+
+      param_voices = update_params_song[:voices].index_by { |voice| voice['id'] }
       Voice.update(param_voices.keys, param_voices.values)
 
-      #@song.update_attributes(update_params_song)
-      render json: { success: 'Song recorded', song: @song, status: :ok}, include: { voices: { only: %i[id notes] } }, status: :ok
+      render json: { success: 'Song recorded', song: @song, status: :ok }, include: { voices: { only: %i[id notes] } },
+             status: :ok
     else
-      render json: { error: 'Validation failed, record not updated', errors: @song.errors, status: :bad_request}, status: :bad_request
+      render json: { error: 'Validation failed, record not updated', errors: @song.errors, status: :bad_request },
+             status: :bad_request
     end
   end
 
@@ -79,6 +77,6 @@ class SongsController < ApplicationController
   end
 
   def update_params_song
-    params.require(:song).permit(:name, :tempo, :time_signature, voices: [:id, :notes, :note_durations, :wave_type])
+    params.require(:song).permit(:name, :tempo, :time_signature, voices: %i[id notes note_durations wave_type])
   end
 end
