@@ -5,6 +5,8 @@ module Sound
     include Sound::NoteHelper
     include Sound::WavefileHelper
 
+    attr_reader :output_file
+
     SAMPLE_RATE = 44_100
     MAX_AMPLITUDE = 0.5
     TWO_PI = 2 * Math::PI
@@ -69,8 +71,19 @@ module Sound
 
     def process_samples(samples)
       samples.transpose.map do |transposed_data|
-        transposed_data.inject(:+) / samples.count
+        transposed_data.inject(:+) / transposed_data.count
       end
+
+      # THIS ADDS SUPPORT FOR DIFFERENT SIZED SAMPLES
+      # PLEASE OPTIMIZE
+
+      # max_length = samples.map(&:length).max - 1
+      # filled_samples = samples.map do |sample|
+      #   (0..max_length).map { |i| sample[i] || 0 }
+      # end
+      # filled_samples.transpose.map do |transposed_data|
+      #   transposed_data.inject(:+) / transposed_data.count
+      # end
     end
   end
 end

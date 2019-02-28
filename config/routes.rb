@@ -1,3 +1,7 @@
 Rails.application.routes.draw do
-  resources :songs
+  resources :songs do
+    member do
+      get 'generate'
+    end
+  end
 end
