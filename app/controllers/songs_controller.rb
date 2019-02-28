@@ -8,7 +8,24 @@ class SongsController < ApplicationController
   end
 
   def create
-    @song = Song.create(name: params[:name], tempo: params['tempo'].to_i, time_signature: params[:time_sign])
+    voices = [
+      Voice.new(
+        notes: params[:voice][:notes],
+        note_durations: params[:voice][:note_duration],
+        wave_type: params[:voice][:wave_type])
+    ]
+    @song = Song.new(
+      name: params[:name],
+      tempo: params['tempo'].to_i,
+      time_signature: params[:time_sign],
+      voices: voices
+    )
+    if @song.valid?
+      @song.save
+      render json: {success: 'Song recorded', status: 200}, status: 200
+    else
+      render json: {error: 'Validation failed', status: 400}, status: 400
+    end
   end
 
   def show
