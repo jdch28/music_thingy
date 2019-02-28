@@ -10,8 +10,7 @@ test_songs = [
   Song.create(
     name: 'Tan tantan tan',
     tempo: 120,
-    time_signature:
-    '4/4'
+    time_signature: '4/4'
   ),
   Song.create(
     name: 'Test Song',
