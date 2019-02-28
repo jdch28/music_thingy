@@ -24,7 +24,7 @@ class SongsController < ApplicationController
     )
     if @song.valid? && @song.save
       render json: { success: 'Song recorded', song: @song, status: :ok },
-             include: { voices: { only: %i[id notes] } },
+             include: { voices: { only: %i[id notes note_durations] } },
              status: :ok
     else
       render json: { error: 'Validation failed', errors: @song.errors, status: :bad_request },
@@ -39,12 +39,12 @@ class SongsController < ApplicationController
 
   def update
     if @song&.valid?
-      @song.update(update_params_song.except('voices'))
-
       param_voices = update_params_song[:voices].index_by { |voice| voice['id'] }
+
+      @song.update(update_params_song.except('voices'))
       Voice.update(param_voices.keys, param_voices.values)
 
-      render json: { success: 'Song recorded', song: @song, status: :ok }, include: { voices: { only: %i[id notes] } },
+      render json: { success: 'Song recorded', song: @song, status: :ok }, include: { voices: { only: %i[id notes note_durations] } },
              status: :ok
     else
       render json: { error: 'Validation failed, record not updated', errors: @song.errors, status: :bad_request },
