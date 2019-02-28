@@ -1,6 +1,6 @@
+# CRUD for songs
 class SongsController < ApplicationController
-
-  before_action :find_song, only: [:show, :destroy]
+  before_action :find_song, only: %i[show destroy]
 
   def index
     @songs = Song.all
@@ -12,7 +12,7 @@ class SongsController < ApplicationController
   end
 
   def show
-    render json: @song, include: {voice: {only: [:id, :notes]}}
+    render json: @song, include: { voice: { only: %i[id notes] } }
   end
 
   def destroy
