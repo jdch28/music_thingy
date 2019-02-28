@@ -1,6 +1,6 @@
 # CRUD for songs
 class SongsController < ApplicationController
-  before_action :find_song, only: %i[show destroy generate]
+  before_action :find_song, only: %i[show destroy generate update]
 
   def index
     @songs = Song.all
@@ -37,6 +37,23 @@ class SongsController < ApplicationController
            include: { voices: { only: %i[id notes] } }
   end
 
+  def update
+    if @song && @song.valid?
+      @song.name = update_params_song[:name]
+      @song.tempo = update_params_song[:tempo]
+      @song.time_signature = update_params_song[:time_signature]
+      binding.pry
+      @song.save
+      param_voices = update_params_song[:voices].index_by {|voice| voice['id']}
+      Voice.update(param_voices.keys, param_voices.values)
+
+      #@song.update_attributes(update_params_song)
+      render json: { success: 'Song recorded', song: @song, status: :ok}, include: { voices: { only: %i[id notes] } }, status: :ok
+    else
+      render json: { error: 'Validation failed, record not updated', errors: @song.errors, status: :bad_request}, status: :bad_request
+    end
+  end
+
   def destroy
     @song.destroy
     render json: { success: 'Song deleted correctly', status: :ok }, status: :ok
@@ -59,5 +76,9 @@ class SongsController < ApplicationController
 
   def find_song
     @song = Song.find_by_id(params[:id])
+  end
+
+  def update_params_song
+    params.require(:song).permit(:name, :tempo, :time_signature, voices: [:id, :notes, :note_durations, :wave_type])
   end
 end
