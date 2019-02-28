@@ -1,6 +1,7 @@
 module Sound
   # Sound synth that generates a .wav file from a list of notes.
-  # Tweaked version of https://github.com/jstrait/nanosynth/blob/master/nanosynth.rb
+  # call like this: Sound::Synthesizer.new.generate_song <song>
+  # Based on https://github.com/jstrait/nanosynth/blob/master/nanosynth.rb
   class Synthesizer
     require 'wavefile'
 
@@ -32,7 +33,7 @@ module Sound
     def get_data_for_buffer(voice)
       samples = []
       notes = voice.notes.split(',')
-      note_durations = voice.note_durations.split(',')
+      note_durations = voice.note_duration.split(',')
       notes.each_with_index do |note, index|
         samples << samples_for_note(note, note_durations[index], voice.wave_type)
       end
