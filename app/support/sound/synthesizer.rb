@@ -47,7 +47,7 @@ module Sound
     end
 
     def get_note_duration(note_duration, tempo, time_signature)
-      note_duration_dictionary = { 'w' => 1.0, 'h' => 0.5, 'q' => 0.25, '8' => 0.125 }
+      note_duration_dictionary = { 'w' => 1.0, 'h' => 0.5, 'q' => 0.25, '8' => 0.125, '16' => 0.0625}
       time_signature_value = time_signature.split('/').last.to_i
       (60.0 / tempo) * note_duration_dictionary[note_duration] * time_signature_value
     end
