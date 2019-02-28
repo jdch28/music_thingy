@@ -14,10 +14,16 @@ module Sound
       @time_signature = song.time_signature
 
       # IF WE ADD MORE VOICES, UPDATE THIS PART
-      voice = song.voice.first
-      samples = get_data_for_buffer(voice)
+      # voice = song.voice.first
+      samples = []
 
-      buffer = WaveFile::Buffer.new(samples.flatten, WaveFile::Format.new(:mono, :float, SAMPLE_RATE))
+      song.voices.each do |voice|
+        samples << get_data_for_buffer(voice)
+      end
+
+      final_samples = process_samples(samples)
+
+      buffer = WaveFile::Buffer.new(final_samples, WaveFile::Format.new(:mono, :float, SAMPLE_RATE))
       write_file(song.name, buffer)
     end
 
@@ -26,11 +32,11 @@ module Sound
     def get_data_for_buffer(voice)
       samples = []
       notes = voice.notes.split(',')
-      note_durations = voice.note_duration.split(',')
+      note_durations = voice.note_durations.split(',')
       notes.each_with_index do |note, index|
         samples << samples_for_note(note, note_durations[index], voice.wave_type)
       end
-      samples
+      samples.flatten
     end
 
     def samples_for_note(note, note_duration, wave_type)
@@ -40,12 +46,7 @@ module Sound
     end
 
     def get_note_duration(note_duration, tempo, time_signature)
-      note_duration_dictionary = {
-        'w' => 1.0,
-        'h' => 0.5,
-        'q' => 0.25,
-        '8' => 0.125
-      }
+      note_duration_dictionary = { 'w' => 1.0, 'h' => 0.5, 'q' => 0.25, '8' => 0.125 }
       time_signature_value = time_signature.split('/').last.to_i
       (60.0 / tempo) * note_duration_dictionary[note_duration] * time_signature_value
     end
@@ -109,6 +110,12 @@ module Sound
         position_in_period >= 0.5 ? MAX_AMPLITUDE : -MAX_AMPLITUDE
       when :saw
         ((position_in_period * 2.0) - 1.0) * MAX_AMPLITUDE
+      end
+    end
+
+    def process_samples(samples)
+      samples.transpose.map do |transposed_data|
+        transposed_data.inject(:+) / samples.count
       end
     end
 
