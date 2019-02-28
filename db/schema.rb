@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2019_02_27_175149) do
 
   create_table "voices", force: :cascade do |t|
     t.string "notes"
-    t.string "note_duration"
+    t.string "note_durations"
     t.string "wave_type"
     t.integer "song_id"
     t.datetime "created_at", null: false

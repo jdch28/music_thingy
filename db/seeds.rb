@@ -6,5 +6,31 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Song.create(name: "Tan tantan tan", tempo: 120, time_signature: "4/4")
-Voice.create(notes: "C4, D4, E4, F4, G4, A4, B4, C5", note_duration: "1, 2, 4, 4, 1, 2, 8, 8", wave_type: "square", song_id: 1)
+test_songs = [
+  Song.create(
+    name: 'Tan tantan tan',
+    tempo: 120,
+    time_signature:
+    '4/4'
+  ),
+  Song.create(
+    name: 'Test Song',
+    tempo: 170,
+    time_signature: '4/4'
+  )
+]
+
+Voice.create(
+  notes: 'C4,D4,E4,F4,G4,A4,B4,C5',
+  note_durations: 'w,h,q,q,w,h,8,8',
+  wave_type: 'square',
+  song: test_songs.first
+)
+
+# Careless Whisper riff.
+Voice.create(
+  notes: 'F4,E5,D5,A4,F4,E5,D5,A4,F4',
+  note_durations: 'q,q,8,q,q,q,8,q,q',
+  wave_type: 'sine',
+  song: test_songs.last
+)
