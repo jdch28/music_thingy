@@ -11,7 +11,7 @@ class Voice < ApplicationRecord
 
   after_initialize :set_defaults
 
-  VALID_NOTES = %w[C C# Db D E F F# Gb G G# Ab A A# Bb B].freeze
+  VALID_NOTES = %w[C C# Db D D# E F F# Gb G G# Ab A A# Bb B].freeze
   VALID_DURATIONS = %w[w h q 8 16].freeze
   VALID_WAVE_TYPES = %w[saw sine square].freeze
 
