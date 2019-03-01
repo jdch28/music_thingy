@@ -77,7 +77,7 @@ class SongsController < ApplicationController
   private
 
   def find_song
-    @song = Song.find_by_id(params[:id])
+    @song = Song.includes(:voices).where(id: params[:id]).take
   end
 
   def update_params_song
