@@ -87,7 +87,7 @@ class SongsController < ApplicationController
   def build_song_data(voices)
     {
       name: params[:name],
-      tempo: params['tempo'].to_i,
+      tempo: params['tempo']&.to_i,
       time_signature: params[:time_signature],
       voices: voices
     }
