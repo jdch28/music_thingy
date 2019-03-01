@@ -27,11 +27,6 @@ test_songs = [
     tempo: 60,
     time_signature: '4/4'
   )
-  # Song.create(
-  #   name: 'Chord Song 2',
-  #   tempo: 55,
-  #   time_signature: '4/4'
-  # )
 ]
 
 Voice.create(
@@ -43,12 +38,11 @@ Voice.create(
 
 # Careless Whisper riff.
 Voice.create(
-  notes: 'F/4,E/5,D/5,A/4,F/4,E/5,D/5,A/4,F/4',
-  note_durations: 'q,q,8,q,q,q,8,q,q',
+  notes: 'F/4,E/5,D/5,A/4,F/4,E/5,D/5,A/4,F/4,C/5,Bb/4,F/4,D/4,C/5,Bb/4,F/4,Bb/4,A/4,F/4,D/4,Bb/3,A/3,Bb/3,C/4,D/4,E/4,F/4,G/4,A/4',
+  note_durations: 'q,q,8,q,q,q,8,q,q,q,8,q,q,q,8,h,q,8,q,q,h,8,8,8,8,8,8,8,h',
   wave_type: 'sine',
   song: test_songs.second
 )
-
 # Multiple voices test
 Voice.create(
   notes: 'C/4,G/4,A/4,F/4',
@@ -76,17 +70,6 @@ Voice.create(
   song: test_songs.fourth
 )
 
-# Multiple voices test 2
-# Voice.create(
-#   notes: 'C4,D4,E4,F4,G4,A4,B4,C5,B4,A4,G4,F4,E4,D4,C4',
-#   note_durations: '16,16,16,16,16,16,16,16,16,16,16,16,16,16,8',
-#   wave_type: 'sine',
-#   song: test_songs.fifth
-# )
-#
-# Voice.create(
-#   notes: 'C4',
-#   note_durations: 'h',
-#   wave_type: 'sine',
-#   song: test_songs.fifth
-# )
+Song.includes(:voices).all.each do |song|
+  Sound::Synthesizer.new.generate_song(song)
+end

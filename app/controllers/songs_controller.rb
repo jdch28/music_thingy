@@ -85,9 +85,11 @@ class SongsController < ApplicationController
   end
 
   def build_song_data(voices)
+    name = params['name'].present? ? params['name'] : nil
+    tempo = params['tempo'].present? ? params['tempo'].to_i : nil
     {
-      name: params[:name],
-      tempo: params['tempo']&.to_i,
+      name: name,
+      tempo: tempo,
       time_signature: params[:time_signature],
       voices: voices
     }
