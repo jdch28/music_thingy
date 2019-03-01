@@ -21,11 +21,6 @@ test_songs = [
     name: 'Chord Song',
     tempo: 60,
     time_signature: '4/4'
-  ),
-  Song.create(
-    name: 'Test',
-    tempo: 60,
-    time_signature: '4/4'
   )
 ]
 
@@ -61,13 +56,6 @@ Voice.create(
   note_durations: 'q,q,q,q',
   wave_type: 'sine',
   song: test_songs.third
-)
-
-Voice.create(
-  notes: 'F#4',
-  note_durations: 'w',
-  wave_type: 'sine',
-  song: test_songs.fourth
 )
 
 Song.includes(:voices).all.each do |song|
