@@ -26,16 +26,16 @@ test_songs = [
     name: 'Test',
     tempo: 60,
     time_signature: '4/4'
-  ),
-  Song.create(
-    name: 'Chord Song 2',
-    tempo: 55,
-    time_signature: '4/4'
   )
+  # Song.create(
+  #   name: 'Chord Song 2',
+  #   tempo: 55,
+  #   time_signature: '4/4'
+  # )
 ]
 
 Voice.create(
-  notes: 'C4,D4,E4,F4,G4,A4,B4,C5',
+  notes: 'C/4,D/4,E/4,F/4,G/4,A/4,B/4,C/5',
   note_durations: 'w,h,q,q,w,h,8,8',
   wave_type: 'square',
   song: test_songs.first
@@ -43,7 +43,7 @@ Voice.create(
 
 # Careless Whisper riff.
 Voice.create(
-  notes: 'F4,E5,D5,A4,F4,E5,D5,A4,F4',
+  notes: 'F/4,E/5,D/5,A/4,F/4,E/5,D/5,A/4,F/4',
   note_durations: 'q,q,8,q,q,q,8,q,q',
   wave_type: 'sine',
   song: test_songs.second
@@ -51,7 +51,7 @@ Voice.create(
 
 # Multiple voices test
 Voice.create(
-  notes: 'C4,G4,A4,F4',
+  notes: 'C/4,G/4,A/4,F/4',
   note_durations: 'q,q,q,q',
   wave_type: 'sine',
   song: test_songs.third
@@ -63,7 +63,7 @@ Voice.create(
   song: test_songs.third
 )
 Voice.create(
-  notes: 'G4,D5,E5,C6',
+  notes: 'G/4,D/5,E/5,C/6',
   note_durations: 'q,q,q,q',
   wave_type: 'sine',
   song: test_songs.third

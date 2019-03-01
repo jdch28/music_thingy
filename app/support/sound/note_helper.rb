@@ -41,8 +41,8 @@ module Sound
         'Bb' => 1,
         'B' => 2
       }
-      octave_difference = note[-1].to_i - 4
-      note_name = note[0..-2]
+      note_name, note_octave = note.split('/')
+      octave_difference = note_octave.to_i - 4
       note_reference[note_name] + 12 * octave_difference
     end
   end

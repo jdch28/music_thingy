@@ -4,27 +4,19 @@ class SongsController < ApplicationController
 
   def index
     @songs = Song.all
-    render json: @songs,
-           include: { voices: { only: %i[id notes] } }
+    render json: @songs
   end
 
   def create
-    voices = [
-      Voice.new(
-        notes: params[:voice][:notes],
-        note_durations: params[:voice][:note_duration],
-        wave_type: params[:voice][:wave_type]
-      )
-    ]
-    @song = Song.new(
-      name: params[:name],
-      tempo: params['tempo'].to_i,
-      time_signature: params[:time_sign],
-      voices: voices
-    )
+    voices = build_voice_array(params[:voices])
+    song_params = build_song_data(voices)
+    @song = Song.new(song_params)
+
     if @song.valid? && @song.save
-      render json: { success: 'Song recorded', song: @song, status: :ok },
-             include: { voices: { only: %i[id notes note_durations] } },
+      synth = Sound::Synthesizer.new
+      synth.generate_song(@song)
+
+      render json: { success: 'Song recorded', file: synth.output_file, song: @song, status: :ok },
              status: :ok
     else
       render json: { error: 'Validation failed', errors: @song.errors, status: :bad_request },
@@ -33,8 +25,7 @@ class SongsController < ApplicationController
   end
 
   def show
-    render json: @song,
-           include: { voices: { only: %i[id notes] } }
+    render json: @song
   end
 
   def update
@@ -44,7 +35,7 @@ class SongsController < ApplicationController
       @song.update(update_params_song.except('voices'))
       Voice.update(param_voices.keys, param_voices.values)
 
-      render json: { success: 'Song recorded', song: @song, status: :ok }, include: { voices: { only: %i[id notes note_durations] } },
+      render json: { success: 'Song recorded', song: @song, status: :ok },
              status: :ok
     else
       render json: { error: 'Validation failed, record not updated', errors: @song.errors, status: :bad_request },
@@ -59,7 +50,7 @@ class SongsController < ApplicationController
 
   def generate
     synth = Sound::Synthesizer.new
-    synth.generate_song @song
+    synth.generate_song(@song)
 
     if File.exist?(synth.output_file)
       render json: { success: 'Song generated correctly', file: synth.output_file, status: :ok },
@@ -78,5 +69,25 @@ class SongsController < ApplicationController
 
   def update_params_song
     params.require(:song).permit(:name, :tempo, :time_signature, voices: %i[id notes note_durations wave_type])
+  end
+
+  def build_song_data(voices)
+    {
+      name: params[:name],
+      tempo: params['tempo'].to_i,
+      time_signature: params[:time_signature],
+      voices: voices
+    }
+  end
+
+  def build_voice_array(voices = [])
+    voices.map do |voice|
+      notes, note_durations = Voice.parse_notes(voice[:notes])
+      Voice.new(
+        notes: notes,
+        note_durations: note_durations,
+        wave_type: voice[:wave_type]
+      )
+    end
   end
 end
