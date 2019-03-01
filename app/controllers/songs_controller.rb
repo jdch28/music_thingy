@@ -1,6 +1,6 @@
 # CRUD for songs
 class SongsController < ApplicationController
-  before_action :find_song, only: %i[show destroy generate update]
+  before_action :find_song, only: %i[show destroy update generate download]
 
   def index
     @songs = Song.all
@@ -57,6 +57,19 @@ class SongsController < ApplicationController
              status: :ok
     else
       render json: { success: 'There was an issue generating the song', status: :internal_server_error },
+             status: :internal_server_error
+    end
+  end
+
+  def download
+    output_file = @song&.sound_file
+    if output_file
+      send_file(
+        output_file,
+        type: 'application/wav'
+      )
+    else
+      render json: { success: 'There was an issue downloading the song', status: :internal_server_error },
              status: :internal_server_error
     end
   end

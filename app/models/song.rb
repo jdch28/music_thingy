@@ -21,6 +21,11 @@ class Song < ApplicationRecord
     }
   end
 
+  def sound_file
+    output_file = create_output_file_path(name)
+    File.exist?(output_file) ? output_file : nil
+  end
+
   private
 
   def set_defaults
@@ -29,8 +34,4 @@ class Song < ApplicationRecord
     self.time_signature ||= '4/4'
   end
 
-  def sound_file
-    output_file = create_output_file_path(name)
-    File.exist?(output_file) ? output_file : nil
-  end
 end
