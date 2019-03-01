@@ -8,8 +8,8 @@
 
 test_songs = [
   Song.create(
-    name: 'Tan tantan tan',
-    tempo: 120,
+    name: 'Lost Woods',
+    tempo: 116,
     time_signature: '4/4'
   ),
   Song.create(
@@ -25,9 +25,9 @@ test_songs = [
 ]
 
 Voice.create(
-  notes: 'C/4,D/4,E/4,F/4,G/4,A/4,B/4,C/5',
-  note_durations: 'w,h,q,q,w,h,8,8',
-  wave_type: 'square',
+  notes: 'E/4,A/4,B/4,E/4,A/4,B/4,E/4,A/4,B/4,E/5,D/5,B/4,C/5,B/4,G/4,E/4',
+  note_durations: '8,8,q,8,8,q,8,8,8,8,q,8,8,8,8,h',
+  wave_type: 'sine',
   song: test_songs.first
 )
 
