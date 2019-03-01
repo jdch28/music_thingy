@@ -1,4 +1,6 @@
 class Song < ApplicationRecord
+  include Sound::WavefileHelper
+
   has_many :voices, dependent: :delete_all
 
   validates :name, presence: true
@@ -14,6 +16,7 @@ class Song < ApplicationRecord
       tempo: tempo,
       time_signature: time_signature,
       creation_date: created_at.strftime('%m/%d/%Y'),
+      file: sound_file,
       notes: voices.first
     }
   end
@@ -24,5 +27,10 @@ class Song < ApplicationRecord
     self.name ||= "Song #{SecureRandom.uuid}"
     self.tempo ||= 100
     self.time_signature ||= '4/4'
+  end
+
+  def sound_file
+    output_file = create_output_file_path(name)
+    File.exist?(output_file) ? output_file : nil
   end
 end

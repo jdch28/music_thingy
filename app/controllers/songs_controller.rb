@@ -53,7 +53,7 @@ class SongsController < ApplicationController
     synth.generate_song(@song)
 
     if File.exist?(synth.output_file)
-      render json: { success: 'Song generated correctly', file: synth.output_file, status: :ok },
+      render json: { success: 'Song generated correctly', song: @song, status: :ok },
              status: :ok
     else
       render json: { success: 'There was an issue generating the song', status: :internal_server_error },
