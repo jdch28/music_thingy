@@ -3,7 +3,7 @@ class SongsController < ApplicationController
   before_action :find_song, only: %i[show destroy update generate download]
 
   def index
-    @songs = Song.all
+    @songs = Song.includes(:voices).all
     render json: @songs
   end
 
