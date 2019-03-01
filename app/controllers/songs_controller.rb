@@ -16,7 +16,7 @@ class SongsController < ApplicationController
       synth = Sound::Synthesizer.new
       synth.generate_song(@song)
 
-      render json: { success: 'Song recorded', file: synth.output_file, song: @song, status: :ok },
+      render json: { success: 'Song recorded', song: @song, status: :ok },
              status: :ok
     else
       render json: { error: 'Validation failed', errors: @song.errors, status: :bad_request },
